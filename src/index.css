@@ -1,0 +1,59 @@
+/* Tailwind Import */
+@import "tailwindcss";
+
+/* Google fonts Import: Merriweather, Montserrat, Roboto  */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+@theme{
+
+/* Green → Primary CTAs, key highlights. */
+  --color-primary-green: #009846;
+
+/* Blue → Navigation, links, headers. */
+  --color-secondary-blue: #1C9ED8;
+
+/* Red → Minimal (Apply Now button, urgent notices). */
+  --color-accent-red: #E30613;
+
+/* dark-gray -> Text/Headings */
+  --color-dark-gray: #222222;
+
+/* light-gray -> Background/Sections */
+  --color-light-gray: #F5F5F5;
+
+/* white -> Page Background */
+  --color-white: #FFFFFF;
+
+/* Fonts  */
+
+--font-merriweather: "Merriweather", serif;
+--font-montserrat: "Montserrat", sans-serif;
+--font-roboto: "Roboto", sans-serif;
+
+  /* Font Weights */
+  --font-weight-bold: 800;
+  --font-weight-semi-bold: 600;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+}
+
+/* Utility classes for our colors */
+/* .text-primary-green { color: var(--color-primary-green); }
+.text-secondary-blue { color: var(--color-secondary-blue); }
+.text-accent-red { color: var(--color-accent-red); }
+.text-dark-gray { color: var(--color-dark-gray); }
+.text-light-gray { color: var(--color-light-gray); }
+
+.bg-primary-green { background-color: var(--color-primary-green); }
+.bg-secondary-blue { background-color: var(--color-secondary-blue); }
+.bg-accent-red { background-color: var(--color-accent-red); }
+.bg-dark-gray { background-color: var(--color-dark-gray); }
+.bg-light-gray { background-color: var(--color-light-gray); }
+
+.border-primary-green { border-color: var(--color-primary-green); }
+.border-secondary-blue { border-color: var(--color-secondary-blue); }
+.border-accent-red { border-color: var(--color-accent-red); }
+.border-dark-gray { border-color: var(--color-dark-gray); }
+.border-light-gray { border-color: var(--color-light-gray); } */
+
