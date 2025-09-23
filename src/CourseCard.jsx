@@ -26,16 +26,16 @@ const CourseCard = ({
         <div className="absolute inset-0 bg-primary-green/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
       <div className="p-8">
-        <h3 className="text-xl font-bold font-montserrat text-dark-gray mb-4 group-hover:text-primary-green transition-colors duration-300">
+        <h3 className="text-xl font-semi-bold font-montserrat text-dark-gray mb-4 group-hover:text-primary-green transition-colors duration-300">
           {title}
         </h3>
-        <p className="text-dark-gray font-roboto leading-relaxed mb-6">
+        <p className="text-dark-gray text-sm lg:text-base font-roboto leading-relaxed mb-6">
           {description}
         </p>
         <div className="flex items-center justify-between">
           <button 
             onClick={onClick}
-            className="flex items-center text-primary-green hover:text-primary-green/80 font-montserrat font-semibold transition-colors duration-300"
+            className="flex items-center text-primary-green hover:text-primary-green/80 font-montserrat font-medium transition-colors duration-300"
           >
             <Eye className="h-4 w-4 mr-2" />
             Explore Course
