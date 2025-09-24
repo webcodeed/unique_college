@@ -43,33 +43,34 @@ const Navbar = () => {
 
   // Navigation items
   const navigationItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
+    { name: 'Home', url: '/' },
+    { name: 'About', url: '/About' },
     { 
       name: 'Courses', 
-      href: '#courses',
+      url: '#Courses',
       dropdown: [
-        { name: 'Undergraduate Programs', href: '#undergraduate' },
-        { name: 'Graduate Programs', href: '#graduate' },
-        { name: 'Online Courses', href: '#online' },
-        { name: 'Professional Development', href: '#professional' },
-        { name: 'Continuing Education', href: '#continuing' },
-        { name: 'Summer Programs', href: '#summer' }
+        { name: ' All Courses', url: '/Courses'},
+        { name: 'Undergraduate Programs', url: '#undergraduate' },
+        { name: 'Graduate Programs', url: '#graduate' },
+        { name: 'Online Courses', url: '#online' },
+        { name: 'Professional Development', url: '#professional' },
+        { name: 'Continuing Education', url: '#continuing' },
+        { name: 'Summer Programs', url: '#summer' }
       ]
     },
     { 
       name: 'Admissions', 
-      href: '#admissions',
+      url: '/admissions',
       dropdown: [
-        { name: 'Apply Now', href: '#apply' },
-        { name: 'Admission Requirements', href: '#requirements' },
-        { name: 'Financial Aid', href: '#financial-aid' },
-        { name: 'Scholarships', href: '#scholarships' },
-        { name: 'Campus Tours', href: '#tours' }
+        { name: 'Apply Now', url: '#apply' },
+        { name: 'Admission Requirements', url: '#requirements' },
+        { name: 'Financial Aid', url: '#financial-aid' },
+        { name: 'Scholarships', url: '#scholarships' },
+        { name: 'Campus Tours', url: '#tours' }
       ]
     },
-    { name: 'Student Life', href: '#student-life' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Student Life', url: '#student-life' },
+    { name: 'Contact', url: '#contact' }
   ];
 
   const handlePageClick = (pageName) => {
@@ -103,7 +104,7 @@ const Navbar = () => {
             <div className="hidden lg:flex lg:items-center lg:space-x-8">
               {navigationItems.map((item) => (
                 <div key={item.name} className="relative">
-                  <button
+                  <Link to={item.url}
                     onClick={(e) => {
                       e.stopPropagation();
                       if (item.dropdown) {
@@ -127,7 +128,7 @@ const Navbar = () => {
                     {activePage === item.name && (
                       <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary-blue"></div>
                     )}
-                  </button>
+                  </Link>
 
                   {/* Dropdown Menu */}
                   {item.dropdown && activeDropdown === item.name && (
@@ -136,28 +137,42 @@ const Navbar = () => {
                         // Mega menu for Courses
                         <div className="grid grid-cols-2 gap-4 p-6">
                           {item.dropdown.map((dropdownItem) => (
-                            <a
-                              key={dropdownItem.name}
-                              href={dropdownItem.href}
+                            <div
+                            key={dropdownItem.name}
                               className="block p-3 rounded-md hover:bg-light-gray transition-colors duration-200"
                               onClick={() => handlePageClick(dropdownItem.name)}
                             >
-                              <div className="font-medium text-dark-gray">{dropdownItem.name}</div>
-                            </a>
+
+<Link to={dropdownItem.url
+                            } className="font-medium text-dark-gray">{dropdownItem.name}</Link>
+                            </div>
                           ))}
                         </div>
                       ) : (
                         // Regular dropdown for Admissions
                         <div className="py-2">
                           {item.dropdown.map((dropdownItem) => (
-                            <a
-                              key={dropdownItem.name}
-                              href={dropdownItem.href}
-                              className="block px-4 py-2 text-dark-gray hover:bg-light-gray hover:text-secondary-blue transition-colors duration-200"
-                              onClick={() => handlePageClick(dropdownItem.name)}
+
+                            <div
+                            key={dropdownItem.name}
+                            className="block px-4 py-2 text-dark-gray hover:bg-light-gray hover:text-secondary-blue transition-colors duration-200"
+                            onClick={() => handlePageClick(dropdownItem.name)}
                             >
+
+                            <Link to={dropdownItem.url
+                            } >
                               {dropdownItem.name}
-                            </a>
+
+                            </Link>
+
+                            </div>
+                            // <a
+                            // href={dropdownItem.href}
+                            //   key={dropdownItem.name}
+                            //   className="block px-4 py-2 text-dark-gray hover:bg-light-gray hover:text-secondary-blue transition-colors duration-200"
+                            //   onClick={() => handlePageClick(dropdownItem.name)}
+                            // >
+                            // </a>
                           ))}
                         </div>
                       )}
@@ -231,6 +246,19 @@ const Navbar = () => {
                       >
                         {dropdownItem.name}
                       </a>
+
+                      //  <link
+                      //                                   key={dropdownItem.name}
+                      //                                   to={dropdownItem.url}
+                      //                                   className="block px-10 py-3 text-dark-gray hover:text-secondary-blue transition-colors duration-200"
+                      //                                   onClick={() =>
+                      //                                       handlePageClick(
+                      //                                           dropdownItem.name
+                      //                                       )
+                      //                                   }
+                      //                               >
+                      //                                   {dropdownItem.name}
+                      //                               </link>
                     ))}
                   </div>
                 )}

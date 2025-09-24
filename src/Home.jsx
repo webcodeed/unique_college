@@ -222,6 +222,31 @@ function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
             {whyChooseUsFeatures.map((feature) => {
               const IconComponent = feature.icon;
+              
+              // Define complete class names for proper Tailwind detection
+              const colorClasses = {
+                'primary-green': {
+                  bg: 'bg-primary-green/10',
+                  hoverBg: 'group-hover:bg-primary-green',
+                  text: 'text-primary-green',
+                  hoverText: 'group-hover:text-primary-green'
+                },
+                'secondary-blue': {
+                  bg: 'bg-secondary-blue/10',
+                  hoverBg: 'group-hover:bg-secondary-blue',
+                  text: 'text-secondary-blue',
+                  hoverText: 'group-hover:text-secondary-blue'
+                },
+                'accent-red': {
+                  bg: 'bg-accent-red/10',
+                  hoverBg: 'group-hover:bg-accent-red',
+                  text: 'text-accent-red',
+                  hoverText: 'group-hover:text-accent-red'
+                }
+              };
+              
+              const colors = colorClasses[feature.colorClass];
+              
               return (
                 <motion.div 
                   key={feature.id}
@@ -231,10 +256,10 @@ function Home() {
                   transition={{ duration: 0.8, delay: feature.delay }}
                   viewport={{ once: true }}
                 >
-                  <div className={`flex items-center justify-center w-20 h-20 bg-${feature.colorClass}/10 rounded-full mb-6 mx-auto group-hover:bg-${feature.colorClass} group-hover:scale-110 transition-all duration-300`}>
-                    <IconComponent className={`h-10 w-10 text-${feature.colorClass} group-hover:text-white transition-colors duration-300`} />
+                  <div className={`flex items-center justify-center w-20 h-20 ${colors.bg} rounded-full mb-6 mx-auto ${colors.hoverBg} group-hover:scale-110 transition-all duration-300`}>
+                    <IconComponent className={`h-10 w-10 ${colors.text} group-hover:text-white transition-colors duration-300`} />
                   </div>
-                  <h3 className={`text-xl font-semi-bold font-montserrat text-dark-gray mb-4 group-hover:text-${feature.colorClass} transition-colors duration-300`}>
+                  <h3 className={`text-xl font-semibold font-montserrat text-dark-gray mb-4 ${colors.hoverText} transition-colors duration-300`}>
                     {feature.title}
                   </h3>
                   <p className="text-dark-gray text-sm lg:text-base font-roboto leading-relaxed">
