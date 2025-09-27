@@ -52,28 +52,28 @@ const Navbar = () => {
             dropdown: [
                 { name: "All Courses", url: "/courses" },
                 { name: "Chew", url: "/course/chew" },
-                { name: "Junior Chew", url: "/courses/junior-chew" },
-                { name: "Chew ND/HND", url: "/courses/chew-nd-hnd" },
+                { name: "Junior Chew", url: "/course/junior-chew" },
+                { name: "Chew ND/HND", url: "/course/chew-nd-hnd" },
                 {
                     name: "Pharmacy Technician",
-                    url: "/courses/",
+                    url: "/course/",
                 },
                 {
                     name: "Health Assistant",
-                    url: "/courses/health-assistant",
+                    url: "/course/health-assistant",
                 },
                 {
                     name: "Environmental Health",
-                    url: "/courses/environmental-health",
+                    url: "/course/environmental-health",
                 },
-                { name: "Health Information", url: "/courses/health-information-management" },
+                { name: "Health Information", url: "/course/health-information-management" },
                 {
                     name: "Public Health Nursing",
-                    url: "/courses/public-health-nursing",
+                    url: "/course/public-health-nursing",
                 },
                 {
                     name: "Natural Medicine",
-                    url: "/courses/natural-medicine",
+                    url: "/course/natural-medicine",
                 },
             ],
         },
