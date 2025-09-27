@@ -2,6 +2,7 @@ import { motion } from "motion/react"
 import { Award, GraduationCap, Globe, Users, BookOpen, Wrench, ArrowRight, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react"
 import CourseCard from "./CourseCard"
 import { useState } from "react"
+import { Link } from "react-router"
 import { Link as ScrollLink, Element } from "react-scroll"
 
 function Home() {
@@ -300,6 +301,7 @@ function Home() {
 
           {/* Courses Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            <Link to={"/course/chew"}>
             <CourseCard
               image="/chew (2).jpg"
               alt="Community Health Extension Worker Program"
@@ -308,7 +310,8 @@ function Home() {
               delay={0.1}
               onClick={() => console.log('CHEW course clicked')}
             />
-            
+            </Link>
+            <Link to={"/course/pharmacy-technician"}>
             <CourseCard
               image="/pharmacy technician.jpg"
               alt="Pharmacy Technician Program"
@@ -317,7 +320,8 @@ function Home() {
               delay={0.2}
               onClick={() => console.log('Pharmacy Technician course clicked')}
             />
-            
+            </Link>
+            <Link to={"/public-health-nursing"}>
             <CourseCard
               image="/public health nursing.jpg"
               alt="Public Health Nursing Program"
@@ -326,6 +330,7 @@ function Home() {
               delay={0.3}
               onClick={() => console.log('Public Health Nursing course clicked')}
             />
+            </Link>
           </div>
 
           {/* View All Courses CTA */}

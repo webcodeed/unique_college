@@ -8,6 +8,8 @@ import About from "./About.jsx"
 import Courses from "./Courses.jsx"
 import Admissions from "./Admissions.jsx"
 import Notfound from "./NotFound.jsx"
+import CoursePage from "./CoursePage.jsx"
+import Contact from "./Contact.jsx"
 
 const routes = createBrowserRouter([
     {
@@ -15,9 +17,13 @@ const routes = createBrowserRouter([
         element: <App />,
         children: [
             { index: true, element: <Home /> },
-            { path: "/About", element: <About /> },
-            { path: "/Courses", element: <Courses /> },
-            { path: "/Admissions", element: <Admissions /> },
+            { path: "/about", element: <About /> },
+            { path: "/courses", element: <Courses /> },
+            { path: "/course/:courseSlug", element: <CoursePage /> },
+            { path: "/admissions", element: <Admissions /> },
+            { path: "/contact-us", element: <Contact/> },
+            
+            
         ],
     },
     {

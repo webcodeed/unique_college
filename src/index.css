@@ -38,6 +38,16 @@
   --font-weight-normal: 400;
 }
 
+/* Line clamp utility for consistent text truncation */
+.line-clamp-4 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  line-height: 1.5;
+}
+
 /* Utility classes for our colors */
 /* .text-primary-green { color: var(--color-primary-green); }
 .text-secondary-blue { color: var(--color-secondary-blue); }

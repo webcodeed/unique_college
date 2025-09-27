@@ -16,6 +16,7 @@ import { motion } from "motion/react";
 import { Facebook, Instagram, Linkedin, MessageCircle, Phone, Mail, MapPin, ExternalLink, ArrowRight, Loader } from "lucide-react";
 import { useState, useRef } from "react";
 import emailjs from '@emailjs/browser';
+import { Link } from "react-router";
 
 // ===============================
 // CONFIGURATION & CONSTANTS
@@ -38,30 +39,40 @@ const EMAILJS_CONFIG = {
 const FOOTER_DATA = {
   // Navigation links for different sections
   quickLinks: [
-    { name: 'About Us', href: '#about' },
-    { name: 'Programs', href: '#programs' },
-    { name: 'Admissions', href: '#admissions' },
-    { name: 'Student Life', href: '#student-life' },
-    { name: 'Faculty', href: '#faculty' },
-    { name: 'News & Events', href: '#news' }
+    {name: 'Home', url:'/'},
+    { name: 'About Us', url: '/about' },
+    { name: 'Courses', url: '/courses' },
+    { name: 'Admissions', url: '/admissions' },
+    { name: 'Student Life', url: '/student-life' },
+    {name: 'Contact Us', url:'/contact'}
   ],
   // Available course offerings
   courses: [
-    { name: 'Community Health', href: '#community-health' },
-    { name: 'Environmental Health', href: '#environmental-health' },
-    { name: 'Health Information Management', href: '#health-info' },
-    { name: 'Medical Laboratory Science', href: '#med-lab' },
-    { name: 'Nursing', href: '#nursing' },
-    { name: 'Pharmacy Technology', href: '#pharmacy' }
-  ],
-  // Admission-related links
-  admissions: [
-    { name: 'Apply Now', href: '#apply' },
-    { name: 'Requirements', href: '#requirements' },
-    { name: 'Scholarships', href: '#scholarships' },
-    { name: 'Tuition & Fees', href: '#tuition' },
-    { name: 'Financial Aid', href: '#financial-aid' },
-    { name: 'International Students', href: '#international' }
+    { name: "All Courses", url: "/courses" },
+                { name: "Chew", url: "/course/chew" },
+                { name: "Junior Chew", url: "/course/junior-chew" },
+                { name: "Chew ND/HND", url: "/course/chew-nd-hnd" },
+                {
+                    name: "Pharmacy Technician",
+                    url: "/course/",
+                },
+                {
+                    name: "Health Assistant",
+                    url: "/course/health-assistant",
+                },
+                {
+                    name: "Environmental Health",
+                    url: "/course/environmental-health",
+                },
+                { name: "Health Information", url: "/course/health-information-management" },
+                {
+                    name: "Public Health Nursing",
+                    url: "/course/public-health-nursing",
+                },
+                {
+                    name: "Natural Medicine",
+                    url: "/course/natural-medicine",
+                },
   ],
   // Contact information
   contact: {
@@ -85,7 +96,6 @@ const FOOTER_DATA = {
 const FOOTER_SECTIONS = [
   { title: "Quick Links", data: FOOTER_DATA.quickLinks, hoverColor: "hover:text-primary-green" },
   { title: "Courses", data: FOOTER_DATA.courses, hoverColor: "hover:text-secondary-blue" },
-  { title: "Admissions", data: FOOTER_DATA.admissions, hoverColor: "hover:text-accent-red" }
 ];
 
 // ===============================
@@ -190,14 +200,14 @@ const FooterSection = ({ title, data, hoverColor, delay }) => (
     <ul className="space-y-2 lg:space-y-3">
       {data.map((item, index) => (
         <li key={index}>
-          <a 
-            href={item.href} 
+          <Link 
+            to={item.url} 
             className={`text-gray-300 ${hoverColor} transition-colors duration-200 font-roboto text-sm lg:text-base flex items-center group`}
           >
             <span className="truncate">{item.name}</span>
             {/* External link icon appears on hover */}
             <ExternalLink className="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0" />
-          </a>
+          </Link>
         </li>
       ))}
     </ul>
