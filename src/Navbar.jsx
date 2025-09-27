@@ -56,7 +56,7 @@ const Navbar = () => {
                 { name: "Chew ND/HND", url: "/course/chew-nd-hnd" },
                 {
                     name: "Pharmacy Technician",
-                    url: "/course/",
+                    url: "/course/pharmacy-technician",
                 },
                 {
                     name: "Health Assistant",
