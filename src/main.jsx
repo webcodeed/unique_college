@@ -10,6 +10,7 @@ import Admissions from "./Admissions.jsx"
 import Notfound from "./NotFound.jsx"
 import CoursePage from "./CoursePage.jsx"
 import Contact from "./Contact.jsx"
+import Student from "./Student.jsx"
 
 const routes = createBrowserRouter([
     {
@@ -21,7 +22,9 @@ const routes = createBrowserRouter([
             { path: "/courses", element: <Courses /> },
             { path: "/course/:courseSlug", element: <CoursePage /> },
             { path: "/admissions", element: <Admissions /> },
-            { path: "/contact-us", element: <Contact/> },
+            { path: "/contact", element: <Contact/> },
+            { path: "/student-life", element: <Student/> },
+
             
             
         ],
