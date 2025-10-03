@@ -449,7 +449,7 @@ function Courses() {
                             </div>
 
                             {/* Dropdown Filters */}
-                            <div className="flex flex-col sm:flex-row justify-center gap-4 w-full">
+                            <div className="flex flex-col sm:flex-row justify-center gap-4">
                                 {/* Category Dropdown */}
                                 <div className="relative w-full sm:w-auto">
                                     <select
