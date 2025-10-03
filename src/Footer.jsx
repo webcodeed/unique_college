@@ -14,7 +14,7 @@
 
 import { motion } from "motion/react";
 import { Facebook, Instagram, Linkedin, MessageCircle, Phone, Mail, MapPin, ExternalLink, ArrowRight, Loader } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import emailjs from '@emailjs/browser';
 import { Link } from "react-router";
 
@@ -48,7 +48,6 @@ const FOOTER_DATA = {
   ],
   // Available course offerings
   courses: [
-    { name: "All Courses", url: "/courses" },
                 { name: "Chew", url: "/course/chew" },
                 { name: "Junior Chew", url: "/course/junior-chew" },
                 { name: "Chew ND/HND", url: "/course/chew-nd-hnd" },
@@ -128,15 +127,8 @@ const StatusMessage = ({ message, type = "success" }) => (
 
 /**
  * Reusable form input component with validation indicator
- * @param {string} type - Input type (text, email, tel, etc.)
- * @param {string} name - Input name attribute for form submission
- * @param {string} placeholder - Placeholder text
- * @param {string} value - Current input value
- * @param {function} onChange - Change handler function
- * @param {boolean} required - Whether field is required
- * @param {string} className - Additional CSS classes
  */
-const FormInput = ({ type, name, placeholder, value, onChange, required = true, className = "" }) => (
+const FormInput = ({ type, name, placeholder, value, onChange, required = true }) => (
   <div className="relative group">
     <input
       type={type}
@@ -144,10 +136,9 @@ const FormInput = ({ type, name, placeholder, value, onChange, required = true, 
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className={`w-full px-5 py-4 border-2 border-gray-200 rounded-xl text-dark-gray font-roboto focus:outline-none focus:border-primary-green focus:ring-4 focus:ring-primary-green/10 transition-all duration-300 group-hover:border-gray-300 bg-white/80 backdrop-blur-sm placeholder-gray-400 ${className}`}
+      className="w-full px-5 py-4 border-2 border-gray-200 rounded-xl text-dark-gray font-roboto focus:outline-none focus:border-primary-green focus:ring-4 focus:ring-primary-green/10 transition-all duration-300 group-hover:border-gray-300 bg-white/80 backdrop-blur-sm placeholder-gray-400"
       required={required}
     />
-    {/* Visual indicator showing field completion status */}
     <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
       <div className={`w-2 h-2 rounded-full transition-colors duration-300 ${value ? 'bg-green-500' : 'bg-gray-300'}`}></div>
     </div>
@@ -156,15 +147,10 @@ const FormInput = ({ type, name, placeholder, value, onChange, required = true, 
 
 /**
  * Gradient button component with loading states
- * @param {boolean} isLoading - Whether button is in loading state
- * @param {string} loadingText - Text to show during loading
- * @param {ReactNode} children - Button content
- * @param {string} className - Additional CSS classes
- * @param {object} props - Additional button props
  */
 const GradientButton = ({ isLoading, loadingText, children, className = "", ...props }) => (
   <button
-    className={` whitespace-nowrap w-full px-8 py-4 bg-gradient-to-r from-primary-green to-green-600 text-white font-bold font-montserrat rounded-xl hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-4 focus:ring-primary-green/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0 group ${className}`}
+    className={`whitespace-nowrap w-full px-8 py-4 bg-gradient-to-r from-primary-green to-green-600 text-white font-bold font-montserrat rounded-xl hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-4 focus:ring-primary-green/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-1 active:translate-y-0 group ${className}`}
     disabled={isLoading}
     {...props}
   >
@@ -183,11 +169,6 @@ const GradientButton = ({ isLoading, loadingText, children, className = "", ...p
 
 /**
  * Dynamic footer section component
- * Renders a footer navigation section with links
- * @param {string} title - Section title
- * @param {Array} data - Array of link objects
- * @param {string} hoverColor - CSS class for hover color
- * @param {number} delay - Animation delay
  */
 const FooterSection = ({ title, data, hoverColor, delay }) => (
   <motion.div
@@ -205,7 +186,6 @@ const FooterSection = ({ title, data, hoverColor, delay }) => (
             className={`text-gray-300 ${hoverColor} transition-colors duration-200 font-roboto text-sm lg:text-base flex items-center group`}
           >
             <span className="truncate">{item.name}</span>
-            {/* External link icon appears on hover */}
             <ExternalLink className="h-3 w-3 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex-shrink-0" />
           </Link>
         </li>
@@ -220,28 +200,16 @@ const FooterSection = ({ title, data, hoverColor, delay }) => (
 
 /**
  * Main Footer Component
- * 
- * Handles form submissions, state management, and renders the complete footer
- * including advisor consultation form, navigation sections, and newsletter signup
  */
 function Footer() {
   // ===============================
   // STATE MANAGEMENT
   // ===============================
   
-  // Form references for EmailJS direct form submission
-  const advisorFormRef = useRef();
-  const emailFormRef = useRef();
-  
-  // Form data state objects
   const [advisorForm, setAdvisorForm] = useState({ name: '', phone: '' });
   const [emailForm, setEmailForm] = useState({ email: '' });
-  
-  // Loading states for form submissions
   const [isSubmittingAdvisor, setIsSubmittingAdvisor] = useState(false);
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
-  
-  // Message states for user feedback
   const [advisorMessage, setAdvisorMessage] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
 
@@ -250,35 +218,69 @@ function Footer() {
   // ===============================
 
   /**
-   * Generic form submission handler following DRY principles
-   * Handles EmailJS submission, state updates, and error handling
-   * 
-   * @param {object} formRef - React ref to the form element
-   * @param {function} setLoading - State setter for loading indicator
-   * @param {function} setMessage - State setter for status message
-   * @param {function} resetForm - Function to reset form state
-   * @param {string} successMessage - Message to show on successful submission
+   * Generic form submission handler using React state
    */
-  const handleFormSubmit = async (formRef, setLoading, setMessage, resetForm, successMessage) => {
+  const handleFormSubmit = async (formData, setLoading, setMessage, resetForm, formType, successMessage) => {
     setLoading(true);
+    setMessage('');
+
     try {
-      // Submit form data using EmailJS
-      await emailjs.sendForm(
+      let emailContent;
+
+      if (formType === 'advisor') {
+        // Create structured email content for advisor consultation
+        emailContent = {
+          name: "Advisor Request",
+          message: `
+Advisor Consultation Request from Website
+
+From: ${formData.name}
+Phone: ${formData.phone}
+Request Type: Advisor Consultation Request
+
+Message:
+The user is requesting a consultation with an advisor to discuss program options and admission requirements.
+
+---
+IMPORTANT: Please contact this person within 24 hours as promised.
+Contact the user at: ${formData.phone}
+          `.trim()
+        };
+      } else if (formType === 'newsletter') {
+        // Create structured email content for newsletter subscription
+        emailContent = {
+          name: 'Newsletter Subscriber',
+          message: `
+Newsletter Subscription from Website
+
+Email: ${formData.email}
+Request Type: Newsletter Subscription Request
+
+Message:
+A user has requested to be added to the newsletter mailing list.
+
+---
+IMPORTANT: Please add this email to the newsletter distribution list.
+Subscriber email: ${formData.email}
+          `.trim()
+        };
+      }
+
+      await emailjs.send(
         EMAILJS_CONFIG.serviceId,
         EMAILJS_CONFIG.templateId,
-        formRef.current,
+        emailContent,
         EMAILJS_CONFIG.publicKey
       );
-      
-      // Success: Update message and reset form
+
       setMessage(successMessage);
       resetForm();
-      formRef.current.reset();
     } catch (error) {
-      // Error: Show error message
+      console.error('EmailJS Error:', error);
       setMessage('Failed to send. Please try again.');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   /**
@@ -288,25 +290,27 @@ function Footer() {
   const handleAdvisorSubmit = (e) => {
     e.preventDefault();
     handleFormSubmit(
-      advisorFormRef,
+      advisorForm,
       setIsSubmittingAdvisor,
       setAdvisorMessage,
       () => setAdvisorForm({ name: '', phone: '' }),
+      'advisor',
       'Request sent successfully! We\'ll contact you soon.'
     );
   };
 
   /**
    * Newsletter subscription form submission handler
-   * Processes the email newsletter signup form
+   * Processes the email newsletter signup
    */
   const handleEmailSubmit = (e) => {
     e.preventDefault();
     handleFormSubmit(
-      emailFormRef,
+      emailForm,
       setIsSubmittingEmail,
       setEmailMessage,
       () => setEmailForm({ email: '' }),
+      'newsletter',
       'Successfully subscribed to our newsletter!'
     );
   };
@@ -317,11 +321,7 @@ function Footer() {
   
   return (
     <footer className="bg-dark-gray text-white">
-      
-      {/* ===============================
-          ADVISOR CONSULTATION SECTION
-          =============================== */}
-      {/* Top section with form for users to request advisor consultation */}
+      {/* Advisor Consultation Section */}
       <div className="border-b border-gray-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <motion.div 
@@ -350,9 +350,7 @@ function Footer() {
                 <p className="text-sm text-gray-600 font-roboto">We'll call you within 24 hours</p>
               </div>
               
-              {/* Advisor consultation form */}
-              <form ref={advisorFormRef} onSubmit={handleAdvisorSubmit} className="space-y-5">
-                {/* Name input field */}
+              <form onSubmit={handleAdvisorSubmit} className="space-y-5">
                 <FormInput
                   type="text"
                   name="name"
@@ -361,10 +359,9 @@ function Footer() {
                   onChange={(e) => setAdvisorForm({...advisorForm, name: e.target.value})}
                 />
                 
-                {/* Phone number input field */}
                 <FormInput
                   type="tel"
-                  name="email"
+                  name="phone"
                   placeholder="Phone Number"
                   value={advisorForm.phone}
                   onChange={(e) => setAdvisorForm({...advisorForm, phone: e.target.value})}
@@ -403,57 +400,95 @@ function Footer() {
         </div>
       </div>
 
-      {/* ===============================
-          MAIN FOOTER NAVIGATION
-          =============================== */}
-      {/* Four-column footer layout with navigation sections */}
+      {/* Main Footer Navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 lg:gap-12">
           
+          {/* College Logo & Branding */}
+          <motion.div
+            className="col-span-2 md:col-span-3 lg:col-span-1 flex flex-col items-center lg:items-start text-center lg:text-left"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            viewport={{ once: true }}
+          >
+            {/* College Logo */}
+            <div className="mb-6">
+              <img 
+                src="/logo.jpg" 
+                alt="Unique College of Health Sciences and Technology Logo" 
+                className="h-20 w-auto sm:h-24 lg:h-28 object-contain rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300"
+              />
+            </div>
+            
+            {/* College branding text */}
+            <div className="space-y-3">
+              <h3 className="text-xl lg:text-2xl font-bold font-montserrat text-white">
+                Unique City College
+              </h3>
+              <p className="text-sm lg:text-base text-gray-300 font-roboto leading-relaxed max-w-xs">
+                Building Healthcare Leaders for Tomorrow's Challenges
+              </p>
+              
+              {/* Accreditation badges */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-2 mt-4">
+                <span className="px-3 py-1 bg-primary-green/20 text-primary-green text-xs font-medium rounded-full border border-primary-green/30">
+                  CHPRBN Accredited
+                </span>
+                <span className="px-3 py-1 bg-secondary-blue/20 text-secondary-blue text-xs font-medium rounded-full border border-secondary-blue/30">
+                  PHC Nigeria
+                </span>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Dynamic footer navigation sections */}
-          {/* Renders Quick Links, Courses, and Admissions sections from config */}
           {FOOTER_SECTIONS.map((section, index) => (
             <FooterSection
               key={section.title}
               title={section.title}
               data={section.data}
               hoverColor={section.hoverColor}
-              delay={0.1 + index * 0.1}
+              delay={0.2 + index * 0.1}
             />
           ))}
 
-          {/* ===============================
-              CONTACT INFORMATION SECTION
-              =============================== */}
-          {/* Static contact information with icons */}
+          {/* Contact Information Section */}
           <motion.div
+            className="col-span-2 md:col-span-1"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
             <h3 className="text-lg lg:text-xl font-bold font-montserrat text-white mb-4 lg:mb-6">Contact Info</h3>
-            <div className="space-y-3 lg:space-y-4">
-              {/* Physical address */}
-              <div className="flex items-start space-x-3">
-                <MapPin className="h-4 w-4 lg:h-5 lg:w-5 text-primary-green mt-1 flex-shrink-0" />
+            <div className="space-y-4 lg:space-y-5">
+              {/* Physical address with improved mobile spacing */}
+              <div className="flex items-start space-x-3 group">
+                <div className="bg-primary-green/20 p-2 rounded-lg group-hover:bg-primary-green/30 transition-colors duration-300">
+                  <MapPin className="h-4 w-4 lg:h-5 lg:w-5 text-primary-green flex-shrink-0" />
+                </div>
                 <p className="text-gray-300 font-roboto text-sm lg:text-base leading-relaxed whitespace-pre-line">
                   {FOOTER_DATA.contact.address}
                 </p>
               </div>
               
-              {/* Phone number with click-to-call functionality */}
-              <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 lg:h-5 lg:w-5 text-secondary-blue flex-shrink-0" />
-                <a href={`tel:${FOOTER_DATA.contact.phone}`} className="text-gray-300 hover:text-white transition-colors duration-200 font-roboto text-sm lg:text-base truncate">
+              {/* Phone number with enhanced styling */}
+              <div className="flex items-center space-x-3 group">
+                <div className="bg-secondary-blue/20 p-2 rounded-lg group-hover:bg-secondary-blue/30 transition-colors duration-300">
+                  <Phone className="h-4 w-4 lg:h-5 lg:w-5 text-secondary-blue flex-shrink-0" />
+                </div>
+                <a href={`tel:${FOOTER_DATA.contact.phone}`} className="text-gray-300 hover:text-white transition-colors duration-200 font-roboto text-sm lg:text-base">
                   {FOOTER_DATA.contact.phone}
                 </a>
               </div>
               
-              {/* Email address with click-to-email functionality */}
-              <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 lg:h-5 lg:w-5 text-accent-red flex-shrink-0" />
-                <a href={`mailto:${FOOTER_DATA.contact.email}`} className="text-gray-300 hover:text-white transition-colors duration-200 font-roboto text-sm lg:text-base truncate">
+              {/* Email address with enhanced styling */}
+              <div className="flex items-center space-x-3 group">
+                <div className="bg-accent-red/20 p-2 rounded-lg group-hover:bg-accent-red/30 transition-colors duration-300">
+                  <Mail className="h-4 w-4 lg:h-5 lg:w-5 text-accent-red flex-shrink-0" />
+                </div>
+                <a href={`mailto:${FOOTER_DATA.contact.email}`} className="text-gray-300 hover:text-white transition-colors duration-200 font-roboto text-sm lg:text-base break-all">
                   {FOOTER_DATA.contact.email}
                 </a>
               </div>
@@ -461,10 +496,7 @@ function Footer() {
           </motion.div>
         </div>
 
-        {/* ===============================
-            NEWSLETTER SUBSCRIPTION SECTION
-            =============================== */}
-        {/* Newsletter signup with glass morphism design */}
+        {/* Newsletter Subscription Section */}
         <motion.div 
           className="mt-12 pt-8 border-t border-gray-600"
           initial={{ opacity: 0, y: 20 }}
@@ -484,7 +516,7 @@ function Footer() {
             
             {/* Newsletter form container */}
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-              <form ref={emailFormRef} onSubmit={handleEmailSubmit} className="space-y-4">
+              <form onSubmit={handleEmailSubmit} className="space-y-4">
                 {/* Email input with icon */}
                 <div className="relative group">
                   <input
@@ -536,10 +568,7 @@ function Footer() {
           </div>
         </motion.div>
 
-        {/* ===============================
-            SOCIAL MEDIA & COPYRIGHT SECTION
-            =============================== */}
-        {/* Bottom footer with social links and legal information */}
+        {/* Social Media & Copyright Section */}
         <motion.div 
           className="mt-8 pt-8 border-t border-gray-600"
           initial={{ opacity: 0, y: 20 }}
@@ -562,7 +591,7 @@ function Footer() {
           {/* Copyright and accreditation information */}
           <div className="text-center text-gray-400 font-roboto">
             <p className="mb-2">
-              © 2025 Unique College of Health Sciences and Technology. All rights reserved.
+              © {new Date().getFullYear()} Unique College of Health Sciences and Technology. All rights reserved.
             </p>
             <p className="text-sm">
               Accredited by Primary Health Care Nigeria and the Community Health Practitioners Registration Board of Nigeria (CHPRBN)
