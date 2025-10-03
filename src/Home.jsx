@@ -341,10 +341,10 @@ function Home() {
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <button className="bg-primary-green hover:bg-primary-green/90 text-white font-montserrat font-bold py-4 px-8 md:py-5 md:px-12 rounded-lg text-lg md:text-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl inline-flex items-center">
+            <Link to={"/courses"} className="bg-primary-green hover:bg-primary-green/90 text-white font-montserrat font-bold py-4 px-8 md:py-5 md:px-12 rounded-lg text-lg md:text-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl inline-flex items-center">
               View All Courses
               <ArrowRight className="h-5 w-5 ml-3" />
-            </button>
+            </Link>
           </motion.div>
         </div>
         </section>
